@@ -99,9 +99,9 @@ socket.on('newmessage',function(message,f){
         v.setAttribute('class','l');
         let u=document.createElement('div');
         u.setAttribute('class','lt');
-        const t=moment(message.create).format('LT');
+        // const t=moment(message.create).format('LT');
         u.innerHTML=`<b>From</b>:${message.n}`;
-        v.innerHTML= `${message.m}     <span>${t}</span>`;
+        v.innerHTML= `${message.m}     <span>${message.create}</span>`;
         b.appendChild(u);
         b.appendChild(v);
         document.querySelector('.message').appendChild(b);
@@ -111,10 +111,10 @@ socket.on('newmessage',function(message,f){
     {
         let b=document.createElement('div');
         b.setAttribute('class','right');
-        const t=moment(message.create).format("LT");
+        // const t=moment(message.create).format("LT");
         let v=document.createElement('div');
         v.setAttribute('class','r');
-        v.innerHTML=`${message.m}     <span>${t}</span>`;
+        v.innerHTML=`${message.m}     <span>${message.create}</span>`;
         b.appendChild(v);
         document.querySelector('.message').appendChild(b);
         scrolldown();

@@ -28,7 +28,7 @@ let chatSchema =mongoose.Schema({
     r: String,
     n: String,
     m: String,
-    create:{ type: String, default: moment().format('LT')}
+    create: String
 });
 
 let d=mongoose.model('Message',chatSchema);
@@ -69,8 +69,8 @@ io.on('connection',(socket)=>{
         if(u && real(message))
         {
             // let ms=m(u.name,message);
-            let ms={n: u.name, m: message, create: moment().valueOf()};
-            let newmsg= new d({r:u.room, n:u.name, m: message});
+            let ms={n: u.name, m: message, create: moment().format("LT")};
+            let newmsg= new d({r:u.room, n:u.name, m: message , create: moment().format("LT")});
             newmsg.save(function(err){
             if(err)
                 throw err;
