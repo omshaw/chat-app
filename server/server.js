@@ -15,7 +15,7 @@ let {User}=require('./utils/users.js');
 let user=new User();
 
 const mongoose=require('mongoose');
-mongoose.connect('mongodb://localhost/chat',{ useNewUrlParser: true ,useUnifiedTopology: true });
+mongoose.connect(process.env.URI||'mongodb://localhost/chat',{ useNewUrlParser: true ,useUnifiedTopology: true });
 const db=mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
