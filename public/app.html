@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat APP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="app-body">
+    <div class="user">
+        <h2>Participants</h2>
+        <div class="users">
+        </div>
+    </div>
+    <div class="main">
+        <div class="message">
+            <!-- <div class="me ">
+
+            </div>
+            <div class="left">
+
+            </div>
+            <div class="right">
+                
+            </div> -->
+        </div>
+        <footer>
+            <input type="text" placeholder="Type a message" id="msg" autofocus>
+            <button id="s" type="submit">send</button>
+        </footer>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+    <script type="text/javascript" src="libs/moment.js"></script>
+</body>
+</html>
