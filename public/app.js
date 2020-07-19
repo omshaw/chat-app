@@ -55,7 +55,6 @@ socket.on('updatelist',(user,name)=>{
 // });
 
 document.getElementById("s").addEventListener('click',(e)=>{
-    e.preventDefault();
     let v=document.getElementById("msg").value;
     socket.emit('create-message',v);
     document.getElementById("msg").value="";
