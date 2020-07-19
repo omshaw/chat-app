@@ -90,7 +90,6 @@ io.on('connection',(socket)=>{
         {    io.to(u.room).emit('updatelist',v); 
             io.to(u.room).emit('newmessage-admin',`${u.name} disconnected!`);
         }
-        console(moment().format("LT"));
     });
 });
 server.listen(port,()=>{
