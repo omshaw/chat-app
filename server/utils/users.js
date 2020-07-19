@@ -3,9 +3,9 @@ class User{
     {
         this.users=[];
     }
-    adduser(id,name,room,status)
+    adduser(id,name,room,status,time)
     {
-        let u={id,name,room,status};
+        let u={id,name,room,status,time};
         this.users.push(u);
     }
     updatelist(room)

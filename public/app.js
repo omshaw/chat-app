@@ -31,7 +31,7 @@ socket.on('updatelist',(user,name)=>{
         console.log(element);
         if(element.status==="offline")
         {    
-            v.innerHTML=`${element.name}<span>last seen at ${moment().format("LT")}</span>`;
+            v.innerHTML=`${element.name}<span>last seen at ${element.time}</span>`;
         }
         else
         {
