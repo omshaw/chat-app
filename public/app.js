@@ -23,7 +23,7 @@ socket.on('connect',()=>{
     socket.emit('admin');
 });
 
-socket.on('updatelist',(user,name)=>{
+socket.on('updatelist',(user)=>{
     let vd=document.createElement('ol');
     user.forEach(function(element){
         

@@ -1,7 +1,7 @@
 const express=require('express');
 const http=require('http');
 const path=require('path');
-const port=process.env.PORT||3000;
+const port=process.env.PORT|| 4000;
 const app=express();
 const publicpath=path.join(__dirname,'/../public');
 const server=http.createServer(app); 
@@ -50,7 +50,7 @@ io.on('connection',(socket)=>{
         // user.deleteuser(socket.id);
         user.deleteoffline(k.name,k.room);
         user.adduser(socket.id,k.name,k.room,"online",moment().format("LT"));
-        io.to(k.room).emit('updatelist',user.updatelist(k.room),k.name);
+        io.to(k.room).emit('updatelist',user.updatelist(k.room));
         socket.on('admin',function(){
             socket.emit('newmessage-admin',`Welcome to our chat room:${k.room}`);
             socket.broadcast.to(k.room).emit('newmessage-admin',`${k.name} joined!`);
@@ -87,9 +87,10 @@ io.on('connection',(socket)=>{
         user.adduser(socket.id,u.name,u.room,"offline",moment().format("LT"));
         let v=user.updatelist(u.room);
         if(u)
-        {    io.to(u.room).emit('updatelist',v,u.name); 
+        {    io.to(u.room).emit('updatelist',v); 
             io.to(u.room).emit('newmessage-admin',`${u.name} disconnected!`);
         }
+        console(moment().format("LT"));
     });
 });
 server.listen(port,()=>{
