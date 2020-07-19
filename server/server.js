@@ -12,10 +12,11 @@ app.use(express.static(publicpath));
 
 let {User}=require('./utils/users.js');
 // let {m}=require('./utils/message.js');
+require('dotenv').config();
 let user=new User();
 
 const mongoose=require('mongoose');
-mongoose.connect(process.env.URI||'mongodb://localhost/chat',{ useNewUrlParser: true ,useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URI||'mongodb://localhost/chat',{ useNewUrlParser: true ,useUnifiedTopology: true });
 const db=mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
