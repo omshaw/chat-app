@@ -13,7 +13,7 @@ app.use(express.static(publicpath));
 let {User}=require('./utils/users.js');
 // let {m}=require('./utils/message.js');
 require('dotenv').config();
-let user=new User();
+// let user=new User();
 
 const mongoose=require('mongoose');
 mongoose.connect(process.env.MONGODB_URI||'mongodb://localhost/chat',{ useNewUrlParser: true ,useUnifiedTopology: true });
@@ -31,12 +31,20 @@ let chatSchema =mongoose.Schema({
     create: String
 });
 
+let userSchema =mongoose.Schema({
+    id: String,
+    name: String,
+    status: String,
+    time: String,
+    room: String
+})
 let d=mongoose.model('Message',chatSchema);
 function real(str)
 {
     return (typeof(str)==="string" && str.trim().length>0);
 }
-
+ 
+let c=mongoose.model('user',userSchema);
 app.get('/',(req,res)=>{
     res.sendFile(publicpath+'/f.html');
 });
@@ -48,16 +56,27 @@ io.on('connection',(socket)=>{
         }
         socket.join(k.room);
         // user.deleteuser(socket.id);
-        user.deleteoffline(k.name,k.room);
-        user.adduser(socket.id,k.name,k.room,"online",moment().format("LT"));
-        io.to(k.room).emit('updatelist',user.updatelist(k.room));
-        socket.on('admin',function(){
-            socket.emit('newmessage-admin',`Welcome to our chat room:${k.room}`);
-            socket.broadcast.to(k.room).emit('newmessage-admin',`${k.name} joined!`);
+        // user.deleteoffline(k.name,k.room);
+        // user.adduser(socket.id,k.name,k.room,"online",moment().format("LT"));
+        c.remove({name: k.name, status:"offline"});
+        let newuser=new c({id: socket.id, name: k.name, status: "online", time: moment().format("LT"), room: k.room});
+        newuser.save(function(err){
+            if(err)
+                throw err;
         });
-        let rm =user.getuser(socket.id);
-        let g=rm.room;
-        d.find({ r: g},function(err,docs){
+        c.find({ room:k.room}, function(err,docs){
+            if(err)
+                throw err;
+            io.to(k.room).emit('updatelist',docs);
+        });
+        
+        // socket.on('admin',function(){
+        //     socket.emit('newmessage-admin',`Welcome to our chat room:${k.room}`);
+        //     socket.broadcast.to(k.room).emit('newmessage-admin',`${k.name} joined!`);
+        // });
+        // let rm =user.getuser(socket.id);
+        // let g=rm.room;
+        d.find({ r: k.room},function(err,docs){
             if(err)
                 throw err;
             socket.emit('old-msg',docs,user.getuser(socket.id));
@@ -65,31 +84,47 @@ io.on('connection',(socket)=>{
         callback(); 
     });
     socket.on('create-message',(message)=>{
-        let u=user.getuser(socket.id);
-        if(u && real(message))
-        {
-            // let ms=m(u.name,message);
-            let ms={n: u.name, m: message, create: moment().format("LT")};
-            let newmsg= new d({r:u.room, n:u.name, m: message , create: moment().format("LT")});
-            newmsg.save(function(err){
+        // let u=user.getuser(socket.id);
+        c.find({id:socket.id}, function(err,u){
             if(err)
                 throw err;
-            socket.emit('newmessage',ms,'right');
-            socket.broadcast.to(u.room).emit('newmessage',ms,'left');
-            });
-        }
+            if(u && real(message))
+            {
+                // let ms=m(u.name,message);
+                let ms={n: u.name, m: message, create: moment().format("LT")};
+                let newmsg= new d({r:u.room, n:u.name, m: message , create: moment().format("LT")});
+                newmsg.save(function(err){
+                if(err)
+                    throw err;
+                socket.emit('newmessage',ms,'right');
+                socket.broadcast.to(u.room).emit('newmessage',ms,'left');
+                });
+            }
+        });
     });
 
     socket.on('disconnect',()=>{
 
-        let u=user.getuser(socket.id);
-        user.deleteuser(socket.id);
-        user.adduser(socket.id,u.name,u.room,"offline",moment().format("LT"));
-        let v=user.updatelist(u.room);
-        if(u)
-        {    io.to(u.room).emit('updatelist',v); 
+        // let u=user.getuser(socket.id);
+        // user.deleteuser(socket.id);
+        c.remove({id: socket.id});
+        let newuser=new c({id: socket.id, name: k.name, status: "offline", time: moment().format("LT"), room: k.room});
+        newuser.save(function(err){
+            if(err)
+                throw err;
+        });
+        // user.adduser(socket.id,u.name,u.room,"offline",moment().format("LT"));
+        // let v=user.updatelist(u.room);
+        // if(u)
+        // {    io.to(u.room).emit('updatelist',v); 
+    
+        // }
+        c.find({ room:k.room}, function(err,docs){
+            if(err)
+                throw err;
+            io.to(k.room).emit('updatelist',docs);
             io.to(u.room).emit('newmessage-admin',`${u.name} disconnected!`);
-        }
+        });
     });
 });
 server.listen(port,()=>{
