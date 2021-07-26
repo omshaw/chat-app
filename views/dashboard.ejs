@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.min.css">
+</head>
+<body class="join-body">
+    <h1 class="mt-4">Dashboard</h1> <a href="/users/logout" class="btn btn-secondary">Logout</a>
+    <% if(user.img){ %>
+    <img src="./uploads/<%= user.img %>" style="border-radius: 50%; width: 100px;">
+    <% } else{ %>
+        <img src="./uploads/picture.png" style="border-radius: 50%; width: 100px; " >
+    <% } console.log(user.img); %> 
+    <p class="lead mb-3">Welcome, <%= user.name %></p>
+    <button type="button" class="btn btn-primary btn-lg"><a href="/join" style="color: white; text-decoration: none;">Join a chat room</a></button>
+    <button type="button" class="btn btn-primary btn-lg"><a href="/create" style="color: white; text-decoration: none;">Create a chat room</a></button>
+    
+    <% if(list.length !==0) { %>
+    <div id="list"> 
+        CHATS
+    <ul class="list-group"> 
+    <% let i=1; %>
+    <%    list.forEach(function(l){  %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="
+                <%= l.link %>
+                ">
+                <%= i+'.' %>
+                <% i++; %> 
+                <%= l.grname %>
+                </a>
+                <span class="badge badge-primary badge-pill">
+                    room-id:<%= l.room%>
+                </span>
+            </li> 
+    <%   }); %> 
+    </ul>  
+    </div>
+    <% } %>
+    <button type="button" class="btn btn-primary btn-lg update" style="display: block; margin-top: 2%;"><a style="color: white; text-decoration: none;">update your profile</a></button>
+    <div id="profile" style="width: 40%; display: none; margin-top: 1%;">
+        <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="name" name="name" class="form-control" id="name" placeholder="Enter Name" value=
+            <%= user.name %>
+            >
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Email address" value=
+            <%= user.email %>
+            >
+        </div>
+        <div class="form-group">
+            <label for="image">Profile Photo</label>
+            <input type="file" name="image" class="form-control" id="image" value="" >
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">
+            Update
+        </button>
+        </form>  
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script>
+        $('.join-body').css({"padding":"1%"});
+        $('#list').css({"width": "30%", "padding":"10px", "text-align":"center"});
+        $('#list').css({"position": "absolute", "top": "24px", "right": "2%", "font-size":"22px"});
+        $('.update').click(function(){
+            $('#profile').toggle();
+        });
+    </script>
+</body>
+</html>

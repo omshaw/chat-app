@@ -5,16 +5,32 @@
 }
 .container{
     background-color: rgb(157, 189, 218);
+    /* background-color: white; */
     text-align: center;
     justify-content: center;
+    align-items: center;
     display: flexbox;
     width: 25%;
-    height: 250px;
+    height: max-content;
     padding: 15px;
     margin: 295px auto;
     border: 2px solid cornflowerblue;
     border-radius: 10px;
 }
+/* .alert{
+    width: max-content;
+    margin: auto;
+    font-size: 24px;
+    padding: 10px;
+    background-color: yellow;
+    font-style: oblique 40deg;
+}
+.close{
+    background: none;
+    outline: none;
+    border: none;
+    size: 24px;
+} */
 h2{
     font-size: 26px;
 }
@@ -50,7 +66,7 @@ label{
 
 
 
-/* App Chat ?Here*/
+/* App Chat Here*/
 .app-body{
     padding: 0px;
     font-family: sans-serif;
@@ -59,8 +75,9 @@ label{
 }
 .user{
     margin-top: 25px;
-    width: 300px;
-    height: 96.8vh;
+    /* width: 300px; */
+    width: 20%;
+    min-height: 96.8vh;
     text-align: center;
     justify-content: flex-start;
     background-color : skyblue;
@@ -70,12 +87,78 @@ label{
 ol{
     padding-inline-start: unset;
 }
+#dp:hover{
+    opacity: 0.7;
+}
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+#caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+}
+.modal-content, #caption {  
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}  
+@-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+  }
+  
+  @keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+  }
+  
+  /* The Close Button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
 li{
    list-style-position: inside; 
    background-color: rgb(181, 206, 216);
-   max-width: 250px;
-   margin: 20px;
-   height: auto;
+   max-width: 90%;
+   margin: 5%;
+   padding-left: 2%;
    justify-content: center;
    font-size: 22px;
    font-weight: bold;
@@ -83,28 +166,44 @@ li{
    border-radius: 5px;
 }
 li span{
-    float: right;
-    margin-right: 10px;
+    padding-left: 2%;
+    display: block;
     font-size: 18px;
     font-weight: 300;
-    padding-top: 4px;
+}
+li span img{
+    margin-right: 2%;
+    width: 3%;
+    height: 3%;
 }
 .main{
     display: inline-block;
-    width: 1500px;
+    min-width: 78%;
     height: 96.8vh;
     margin: 25px auto;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
+    padding-top: 4px;
     background-color: whitesmoke;
     position: absolute;
-    left: 350px;
+    left: 21%;
+}
+#gr-name{
+    display: inline;
+    margin: 0;
+    font-size: 22px;
+    font-style: oblique 20deg;
+    margin-left: 2%;
+    font-weight: bolder;
+    /* padding: 10px; */
 }
 .message{
     display: flexbox;
-    width: 1430px;
+    /* width: 1430px; */
+    width: 96%;
     height: 83vh;
-    margin: 35px;
+    margin: 2%;
     margin-bottom: 10px;
+    margin-top: 10px ;
     overflow-y: scroll;
     background-color: #21D4FD;
     background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
@@ -120,14 +219,16 @@ footer{
     border-radius: 14px;
     padding-left: 10px;
     font-size: 24px;
-    width: 1350px;
+    /* width: 1350px; */
+    width: 90%;
     height: 50px;
-    margin-left: 35px;
+    /* margin-left: 35px; */
+    margin-left: 2%;
     background-color: white;
 }
 #s{
     height: 55px;
-    width: 75px;
+    width: 5%;
     background-color: rgb(196, 233, 159);
     text-align: center;
     justify-content: center;
