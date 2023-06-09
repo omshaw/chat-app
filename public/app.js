@@ -26,8 +26,9 @@ socket.on('gr-name', (name) => {
     document.getElementById('gr-name').innerText = name;
 });
 socket.on('updatelist', (user, obj) => {
-    console.log(user);
-    console.log(obj);
+    // console.log(user);
+    // console.log(obj);
+    // console.log(user[0].status);
     document.querySelector('.user h2').innerText = `${user.length} Participants`;
     let vd = document.createElement('ol');
     vd.style.cssText = 'list-style-type:none;';
@@ -43,13 +44,13 @@ socket.on('updatelist', (user, obj) => {
                     p.src = `./uploads/${obj[i].image}`;
                     p.alt =element.name;
                     v.appendChild(p);
-                    v.innerHTML += `${element.name}<span><img src="https://img.icons8.com/emoji/48/000000/red-circle-emoji.png"/>last seen at ${element.time}</span>`;
+                    v.innerHTML += `${element.name}<span><img src="https://img.icons8.com/emoji/48/000000/red-circle-emoji.png"/>last seen at ${element.time}</span><hr>`;
                 }
                 else {
                     p.src = `./uploads/${obj[i].image}`;
                     p.alt = element.name;
                     v.appendChild(p);
-                    v.innerHTML += `${element.name}<span><img src="https://img.icons8.com/emoji/48/000000/green-circle-emoji.png"/>Online</span>`;
+                    v.innerHTML += `${element.name}<span><img src="https://img.icons8.com/emoji/48/000000/green-circle-emoji.png"/>Online</span><hr>`;
                 }
             }
         }
@@ -70,14 +71,32 @@ socket.on('newmessage-admin',function(message){
     scrolldown();
 });
 
-document.getElementById("s").addEventListener('click', (e) => {
-    let v = document.getElementById("msg").value;
+document.getElementById("sb").addEventListener('click', (e) => {
+    let v = document.getElementById("Msg").innerHTML;
+    console.log(v);
     socket.emit('create-message', v);
-    document.getElementById("msg").value = "";
+    document.getElementById("Msg").innerHTML='';
 });
+let t="";
 socket.on('old-msg', function (docs, name) {
     for (var i = 0; i < docs.length; i++) {
         if (docs[i].n !== name) {
+            if(t=="")
+            {
+                t=docs[i].date;
+                let v=document.createElement('div');
+                v.setAttribute("class","me");
+                v.innerText=t;
+                document.querySelector('.message').appendChild(v);
+            }
+            else if(t!=docs[i].date)
+            {
+                t=docs[i].date;
+                let v=document.createElement('div');
+                v.setAttribute("class","me");
+                v.innerText=t;
+                document.querySelector('.message').appendChild(v);
+            }
             let b = document.createElement('div');
             b.setAttribute('class', 'left');
             let v = document.createElement('div');
@@ -92,6 +111,22 @@ socket.on('old-msg', function (docs, name) {
             scrolldown();
         }
         else {
+            if(t=="")
+            {
+                t=docs[i].date;
+                let v=document.createElement('div');
+                v.setAttribute("class","me");
+                v.innerText=t;
+                document.querySelector('.message').appendChild(v);
+            }
+            else if(t!=docs[i].date)
+            {
+                t=docs[i].date;
+                let v=document.createElement('div');
+                v.setAttribute("class","me");
+                v.innerText=t;
+                document.querySelector('.message').appendChild(v);
+            }
             let b = document.createElement('div');
             b.setAttribute('class', 'right');
             let v = document.createElement('div');
@@ -104,6 +139,22 @@ socket.on('old-msg', function (docs, name) {
     }
 });
 socket.on('newmessage', function (message, f) {
+    if(t=="")
+    {
+        t=message.date;
+        let v=document.createElement('div');
+        v.setAttribute("class","me");
+        v.innerText=t;
+        document.querySelector('.message').appendChild(v);
+    }
+    else if(t!=message.date)
+    {
+        t=message.date;
+        let v=document.createElement('div');
+        v.setAttribute("class","me");
+        v.innerText=t;
+        document.querySelector('.message').appendChild(v);
+    }
     if (f == 'left') {
         let b = document.createElement('div');
         b.setAttribute('class', 'left');

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat APP</title>
     <link rel="stylesheet" href="https://bootswatch.com/4/journal/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="app-body">
@@ -16,7 +19,7 @@
     <div id="myModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="img01">
-        <div id="caption"></div>
+        <!-- <div id="caption"></div> -->
     </div>      
     <div class="main">
         <!-- <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-menu-app" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -39,10 +42,78 @@
                 
             </div> -->
         </div>
-        <footer>
+        <!-- OLD -->
+        <!-- <footer>
             <input type="text" placeholder="Type a message" id="msg" autofocus>
             <button id="s" type="submit">send</button>
-        </footer>
+        </footer> -->
+
+        <!-- NEW -->
+        <div class="row">
+			<div class="col-12">
+			  <div class="chat-box-tray">
+				<i id="emo" class="material-icons">sentiment_very_satisfied</i>
+				<div id="Msg" class="Input" type="text" contenteditable="true" data-text="Type your message here..."></div>
+                <i class="material-icons">mic</i>
+				<i id="sb" class="material-icons">send</i>
+			  </div>
+              <div class="emoji-dashboard">
+				<ul class="emojis">
+					<li class="emoji" data-clipboard-text="--1"><i class="em em---1"></i></li>
+					<li class="emoji" data-clipboard-text="-1"><i class="em em--1"></i></li>
+					<li class="emoji" data-clipboard-text="100"><i class="em em-100"></i></li>
+					<li class="emoji" data-clipboard-text="1234"><i class="em em-1234"></i></li>
+					<li class="emoji" data-clipboard-text="8ball"><i class="em em-8ball"></i></li>
+					<li class="emoji" data-clipboard-text="a"><i class="em em-a"></i></li>
+					<li class="emoji" data-clipboard-text="ab"><i class="em em-ab"></i></li>
+					<li class="emoji" data-clipboard-text="abc"><i class="em em-abc"></i></li>
+					<li class="emoji" data-clipboard-text="abcd"><i class="em em-abcd"></i></li>
+					<li class="emoji" data-clipboard-text="accept"><i class="em em-accept"></i></li>
+					<li class="emoji" data-clipboard-text="aerial_tramway"><i class="em em-aerial_tramway"></i></li>
+					<li class="emoji" data-clipboard-text="airplane"><i class="em em-airplane"></i></li>
+					<li class="emoji" data-clipboard-text="alarm_clock"><i class="em em-alarm_clock"></i></li>
+					<li class="emoji" data-clipboard-text="alien"><i class="em em-alien"></i></li>
+					<li class="emoji" data-clipboard-text="ambulance"><i class="em em-ambulance"></i></li>
+					<li class="emoji" data-clipboard-text="anchor"><i class="em em-anchor"></i></li>
+					<li class="emoji" data-clipboard-text="angel"><i class="em em-angel"></i></li>
+					<li class="emoji" data-clipboard-text="anger"><i class="em em-anger"></i></li>
+					<li class="emoji" data-clipboard-text="angry"><i class="em em-angry"></i></li>
+					<li class="emoji" data-clipboard-text="anguished"><i class="em em-anguished"></i></li>
+					<li class="emoji" data-clipboard-text="ant"><i class="em em-ant"></i></li>
+					<li class="emoji" data-clipboard-text="apple"><i class="em em-apple"></i></li>
+					<li class="emoji" data-clipboard-text="aquarius"><i class="em em-aquarius"></i></li>
+					<li class="emoji" data-clipboard-text="aries"><i class="em em-aries"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_backward"><i class="em em-arrow_backward"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_double_down"><i class="em em-arrow_double_down"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_double_up"><i class="em em-arrow_double_up"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_down"><i class="em em-arrow_down"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_down_small"><i class="em em-arrow_down_small"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_forward"><i class="em em-arrow_forward"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_heading_down"><i class="em em-arrow_heading_down"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_heading_up"><i class="em em-arrow_heading_up"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_left"><i class="em em-arrow_left"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_lower_left"><i class="em em-arrow_lower_left"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_lower_right"><i class="em em-arrow_lower_right"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_right"><i class="em em-arrow_right"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_right_hook"><i class="em em-arrow_right_hook"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_up"><i class="em em-arrow_up"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_up_down"><i class="em em-arrow_up_down"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_up_small"><i class="em em-arrow_up_small"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_upper_left"><i class="em em-arrow_upper_left"></i></li>
+					<li class="emoji" data-clipboard-text="arrow_upper_right"><i class="em em-arrow_upper_right"></i></li>
+					<li class="emoji" data-clipboard-text="arrows_clockwise"><i class="em em-arrows_clockwise"></i></li>
+					<li class="emoji" data-clipboard-text="arrows_counterclockwise"><i class="em em-arrows_counterclockwise"></i></li>
+					<li class="emoji" data-clipboard-text="art"><i class="em em-art"></i></li>
+					<li class="emoji" data-clipboard-text="articulated_lorry"><i class="em em-articulated_lorry"></i></li>
+					<li class="emoji" data-clipboard-text="astonished"><i class="em em-astonished"></i></li>
+					<li class="emoji" data-clipboard-text="atm"><i class="em em-atm"></i></li>
+					<li class="emoji" data-clipboard-text="b"><i class="em em-b"></i></li>
+				</ul>
+			</div>
+			</div>
+		</div>
+
+
     </div>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -51,6 +122,9 @@
     <script src="/socket.io/socket.io.js"></script>
     <script src="app.js"></script>
     <script type="text/javascript" src="libs/moment.js"></script>
+    
+    <script  src="https://code.jquery.com/jquery-3.1.1.min.js"  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="  crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" ></script>
     <script>
         $('.bi').css({'cursor':'pointer'});
         $('.bi-arrow-left-short').click(function(){
@@ -77,7 +151,25 @@
         span.addEventListener('click',()=>{ 
           modal.style.display = "none";
         });
-      
+        
+
+        $('#emo').click(function(){
+			$('.emoji-dashboard').slideToggle('fast');
+		});
+		$(document).click(function(){
+			$(".emoji-dashboard").slideUp('fast');
+		});
+		$(".material-icons").click(function(e){
+			e.stopPropagation();
+		});
+		$('.emoji-dashboard li .em').click(function(){
+			var emo = $(this).css('background-image').split('"')[1];
+            
+			$('.Input').find('div').remove();
+			$('.Input').append('<img src="'+emo+'">');
+			$(".emoji-dashboard").slideUp('fast');
+
+		});
     </script>
 </body>
 </html>

@@ -41,7 +41,8 @@ let chatSchema = mongoose.Schema({
     r: String,
     n: String,
     m: String,
-    create: String
+    create: String,
+    date: String 
 });
 
 let userSchema = mongoose.Schema({
@@ -82,22 +83,21 @@ let k;
 
 async function pics(room){
     let obj=[];
-    await Joined.find({"list.room": room})
-    .then(async function(record){
-        for(let i=0;i<record.length;i++)
+    let record=await Joined.find({"list.room": room});
+    for(let i=0;i<record.length;i++)
+    {
+        let n;
+        for(let j=0;j<record[i].list.length;j++)
         {
-            let n;
-            for(let j=0;j<record[i].list.length;j++)
-            {
-                if(record[i].list[j].room===room)
-                    n=record[i].list[j].name;
-            }
-            await user.findOne({email: record[i].email})
-            .then(function(doc){
-                obj.push({name: n, image: doc.img});
-            });
+            if(record[i].list[j].room===room)
+                n=record[i].list[j].name;
         }
-    });
+        await user.findOne({email: record[i].email})
+        .then(function(doc){
+            obj.push({name: n, image: doc.img});
+        });
+    }
+    // console.log(obj);
     return obj;
 }
 passport.use(
@@ -424,20 +424,18 @@ io.on('connection', (socket) => {
         //         });
         //     }
         // });
-        c.findOne({ name: k.name, room:k.room})
-        .then(function(bt){
+        await c.findOne({ name: k.name, room:k.room})
+        .then(async function(bt){
             if(bt)
             {
                 bt.status='online';
                 bt.id=socket.id;
-                bt.save()
-                .then(function(){
-                    c.find({room: k.room})
-                    .then(function(docs){
-                        pics(k.room)
-                        .then(function(result){
-                            io.to(k.room).emit('updatelist', docs, result);
-                        });
+                await bt.save()
+                .then(async function(){
+                    await c.find({room: k.room})
+                    .then(async function(docs){
+                        io.to(k.room).emit('updatelist', docs, await pics(k.room));
+                        
                     });
                 });
             }
@@ -446,8 +444,8 @@ io.on('connection', (socket) => {
                 newuser.save()
                 .then(function(){
                     c.find({room: k.room})
-                    .then(function(docs){
-                        io.to(k.room).emit('updatelist', docs, pics(k.room));
+                    .then(async function(docs){
+                        io.to(k.room).emit('updatelist', docs, await pics(k.room));
                     });
                 });
             }
@@ -471,11 +469,10 @@ io.on('connection', (socket) => {
         c.findOne({ id: socket.id }, function (err, u) {
             if (err)
                 throw err;
-            console.log(u);
             if (u && real(message)) {
                 // let ms=m(u.name,message);
-                let ms = { n: u.name, m: message, create: moment().format("LT") };
-                let newmsg = new d({ r: u.room, n: u.name, m: message, create: moment().format("LT") });
+                let ms = { n: u.name, m: message, create: moment().format("LT"), date:moment().format("ll")};
+                let newmsg = new d({ r: u.room, n: u.name, m: message, create: moment().format("LT"), date:moment().format("ll")});
                 newmsg.save(function (err) {
                     if (err)
                         throw err;
@@ -516,17 +513,17 @@ io.on('connection', (socket) => {
         //         });
         //     }
         // });
-        c.findOne({id: socket.id})
-        .then(function(bd){
+        await c.findOne({id: socket.id})
+        .then(async function(bd){
             if(bd)
             {
                 bd.status="offline";
                 bd.time = moment().format("lll");
-                bd.save()
-                .then(function(){
-                    c.find({room : bd.room})
-                    .then(function(docs){
-                        io.to(bd.room).emit('updatelist', docs, pics(bd.room));
+                await bd.save()
+                .then(async function(){
+                    await c.find({room : bd.room})
+                    .then(async function(docs){
+                        io.to(bd.room).emit('updatelist', docs, await pics(bd.room));
                     });
                 });
             }
