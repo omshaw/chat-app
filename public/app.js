@@ -41,13 +41,13 @@ socket.on('updatelist', (user, obj) => {
                 p.setAttribute("id", "dp");
                 p.style.cssText = 'border-radius: 50%; width: 2.5em; margin: 10px; cursor: pointer;';
                 if (element.status === "offline") {
-                    p.src = `./uploads/${obj[i].image}`;
+                    p.src = `${obj[i].image}`;
                     p.alt =element.name;
                     v.appendChild(p);
                     v.innerHTML += `${element.name}<span><img src="https://img.icons8.com/emoji/48/000000/red-circle-emoji.png"/>last seen at ${element.time}</span><hr>`;
                 }
                 else {
-                    p.src = `./uploads/${obj[i].image}`;
+                    p.src = `${obj[i].image}`;
                     p.alt = element.name;
                     v.appendChild(p);
                     v.innerHTML += `${element.name}<span><img src="https://img.icons8.com/emoji/48/000000/green-circle-emoji.png"/>Online</span><hr>`;

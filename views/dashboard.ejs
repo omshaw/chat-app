@@ -9,10 +9,10 @@
 <body class="join-body">
     <h1 class="mt-4">Dashboard</h1> <a href="/users/logout" class="btn btn-secondary">Logout</a>
     <% if(user.img){ %>
-    <img src="./uploads/<%= user.img %>" style="border-radius: 50%; width: 100px;">
+    <img src="<%= user.img %>" style="border-radius: 50%; width: 100px;">
     <% } else{ %>
         <img src="./uploads/picture.png" style="border-radius: 50%; width: 100px; " >
-    <% } console.log(user.img); %> 
+    <% }  %> 
     <p class="lead mb-3">Welcome, <%= user.name %></p>
     <button type="button" class="btn btn-primary btn-lg"><a href="/join" style="color: white; text-decoration: none;">Join a chat room</a></button>
     <button type="button" class="btn btn-primary btn-lg"><a href="/create" style="color: white; text-decoration: none;">Create a chat room</a></button>
@@ -41,7 +41,7 @@
     <% } %>
     <button type="button" class="btn btn-primary btn-lg update" style="display: block; margin-top: 2%;"><a style="color: white; text-decoration: none;">update your profile</a></button>
     <div id="profile" style="width: 40%; display: none; margin-top: 1%;">
-        <form method="POST" enctype="multipart/form-data">
+        <form onsubmit="fun()" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="name" name="name" class="form-control" id="name" placeholder="Enter Name" value=
@@ -58,7 +58,7 @@
             <label for="image">Profile Photo</label>
             <input type="file" name="image" class="form-control" id="image" value="" >
         </div>
-        <button type="submit" class="btn btn-primary btn-block">
+        <button id='btn' type="submit" class="btn btn-primary btn-block">
             Update
         </button>
         </form>  
@@ -74,6 +74,44 @@
         $('.update').click(function(){
             $('#profile').toggle();
         });
+        let image='';
+        let email='';
+        $('#email').change((e)=>{
+            email=e.target.value;
+        });
+        $('#image').change((e)=>{
+            // e.preventDefault();
+            image=e.target.files[0];
+        });
+        function convertToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.onload = () => [
+                    resolve(fileReader.result)
+                ]
+                fileReader.onerror = (error) => {
+                    reject(error)
+                }
+            });
+        }
+        async function fun()
+        {
+            const Image = await convertToBase64(image);
+            email=document.getElementById('email').value;
+            let v = await fetch('/dashboard', {
+            method: 'post',
+            body: JSON.stringify({Image,email}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            });
+            v = await v.json();
+            if(v)
+            {
+                window.location.reload();
+            }
+        }
     </script>
 </body>
 </html>

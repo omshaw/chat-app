@@ -54,7 +54,7 @@
 			  <div class="chat-box-tray">
 				<i id="emo" class="material-icons">sentiment_very_satisfied</i>
 				<div id="Msg" class="Input" type="text" contenteditable="true" data-text="Type your message here..."></div>
-                <i class="material-icons">mic</i>
+                <i id="mic" class="material-icons">mic</i>
 				<i id="sb" class="material-icons">send</i>
 			  </div>
               <div class="emoji-dashboard">
@@ -170,6 +170,51 @@
 			$(".emoji-dashboard").slideUp('fast');
 
 		});
+
+        // VOICE TO TEXT
+        var speechRecognition = window.webkitSpeechRecognition;
+        var recognition = new speechRecognition();
+
+        var textbox = $("#Msg");
+
+        recognition.continuous = true
+
+        // recognition is started
+
+        recognition.onstart = function() {
+
+            console.log("Voice Recognition is On");
+            $('#mic').css('color','blue');
+        }
+
+        recognition.onspeechend = function() {
+
+            console.log("No Activity");
+            $('#mic').css('color','grey');
+        }
+
+        recognition.onerror = function() {
+
+            console.log("Try Again");
+            $('#mic').css('color','grey');
+        }
+
+        recognition.onresult = function(event) {
+
+            var current = event.resultIndex;
+
+            var transcript = event.results[current][0].transcript
+
+            textbox.append(transcript);
+
+        }
+
+        $("#mic").click(function(event) {
+
+            recognition.start();
+
+        });
+
     </script>
 </body>
 </html>

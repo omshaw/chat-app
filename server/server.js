@@ -16,11 +16,11 @@ const passport=require('passport');
 const Localstrategy=require('passport-local').Strategy;
 app.use(express.static(publicpath));
 const multer=require('multer');
-app.use(bodyparser.json());
-app.use(bodyparser.urlencoded({
-    extended:false
-}));
-app.use(express.urlencoded({extended: false}));
+
+app.use(express.json({ limit: '25mb' }));
+app.use(express.urlencoded({ limit: '25mb', extended: false }));
+// app.use(cors())
+
 
 app.set('view-engine','ejs');
 let { User } = require('./utils/users.js');
@@ -240,24 +240,42 @@ app.post('/users/login',(req,res,next)=>{
         failureFlash: true
     })(req,res,next);
 });
-app.get('/dashboard',ensureAuthenticated,(req,res)=>{
-    Joined.findOne({email:req.user.email}).then(function(record){
-        user.findOne({email: req.user.email})
-        .then(function(doc){
+app.get('/dashboard',ensureAuthenticated,async(req,res)=>{
+    let record=await Joined.findOne({email:req.user.email});
+    if(record)
+    {
+        let doc=await user.findOne({email: req.user.email});
+        if(doc)
+        {
             return res.render('dashboard.ejs',{
                 user: doc,
                 list: (record)?record.list:[]
             });
-        });
-    });
+        }
+    }
 });
-app.post('/dashboard',upload,(req,res) =>{
-    user.findOne({email: req.user.email})
-      .then(function(record){
-        record.img=req.file.filename;
-        record.save();
-      }); 
-    res.redirect('/dashboard');
+// app.post('/dashboard',(req,res) =>{
+//     // let p =await req.json();
+//     console.log(req.body);
+//     // user.findOne({email: req.user.email})
+//     //   .then(function(record){
+//     //     record.img=req.file.filename;
+//     //     record.save();
+//     //   }); 
+//     res.redirect('/dashboard');
+// });
+app.post('/dashboard',async(req,res)=>{
+    // console.log(req.body);
+    let record=await user.findOne({email: req.body.email});
+    if(record)
+    {
+        record.img=req.body.Image;
+        let p= await record.save();
+        if(p)
+        {
+          res.send({msg:'good'});
+        }
+    }
 });
 app.get('/join',ensureAuthenticated ,(req, res) => {
     // res.sendFile(publicpath + '/f.html');
