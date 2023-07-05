@@ -166,7 +166,7 @@
 			var emo = $(this).css('background-image').split('"')[1];
             
 			$('.Input').find('div').remove();
-			$('.Input').append('<img src="'+emo+'">');
+			$('.Input').append('<img style="width:25px" src="'+emo+'">');
 			$(".emoji-dashboard").slideUp('fast');
 
 		});
@@ -178,24 +178,27 @@
         var textbox = $("#Msg");
 
         recognition.continuous = true
-
+        var sp=false;
         // recognition is started
 
         recognition.onstart = function() {
 
             console.log("Voice Recognition is On");
+            sp=true;
             $('#mic').css('color','blue');
         }
 
         recognition.onspeechend = function() {
 
             console.log("No Activity");
+            sp=false;
             $('#mic').css('color','grey');
         }
 
         recognition.onerror = function() {
 
             console.log("Try Again");
+            sp=false;
             $('#mic').css('color','grey');
         }
 
@@ -210,9 +213,16 @@
         }
 
         $("#mic").click(function(event) {
-
-            recognition.start();
-
+            if(!sp)
+            {
+                recognition.start();
+            }
+            else
+            {
+                recognition.stop();
+                sp=false;
+                $('#mic').css('color','grey');
+            }
         });
 
     </script>
